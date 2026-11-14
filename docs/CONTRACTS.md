@@ -131,3 +131,5 @@ const score = defaultRiskHooks.scoreMission(evaluation, outcome);
   registry. Teammates replacing `gameConfig.json` or constructing `GameConfig` in fixtures
   must include the five required baseline checks; add-on checks may compare supported
   metrics without an engine change.
+- **Step 2:** Added focused Vitest coverage for engine formulas/check boundaries, extensible
+  catalog rows, readable validation failures, and store navigation/launch behavior.

@@ -95,7 +95,7 @@ export const gameConfigSchema = z.object({
       if (ids.has(check.id)) {
         context.addIssue({
           code: 'custom',
-          path: [index, 'id'],
+          path: ['checks', index, 'id'],
           message: `Duplicate check id "${check.id}".`,
         });
       }
@@ -120,7 +120,7 @@ export const gameConfigSchema = z.object({
       } else if (check.kind !== kind) {
         context.addIssue({
           code: 'custom',
-          path: [checks.indexOf(check), 'kind'],
+          path: ['checks', checks.indexOf(check), 'kind'],
           message: `Baseline check "${id}" must have kind "${kind}".`,
         });
       }
