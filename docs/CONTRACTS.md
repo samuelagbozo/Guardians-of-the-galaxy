@@ -110,6 +110,12 @@ screen code:
 const useIntegratedStore = createGameStore({ riskHooks: role4RiskHooks });
 ```
 
+For the debug view, `src/store/debugSnapshot.ts` exports
+`getDebugSnapshotJson()`, which serializes the current screen, selections, evaluation, and
+checks. Role 2 should add a development-only `/debug` route in their owned screen/router
+files and render the returned string in a `<pre>`; the app/router files are outside this
+contract owner’s edit boundary.
+
 ## Risk hooks
 
 `RiskHooks` keeps odds, random event rolls, outcome resolution, and scoring replaceable.
@@ -133,3 +139,6 @@ const score = defaultRiskHooks.scoreMission(evaluation, outcome);
   metrics without an engine change.
 - **Step 2:** Added focused Vitest coverage for engine formulas/check boundaries, extensible
   catalog rows, readable validation failures, and store navigation/launch behavior.
+- **Step 3:** Added the owned-folder debug snapshot helper. The `/debug` route/page itself
+  remains a Role 2 integration task because screen/router files are outside this owner’s
+  edit boundary.
