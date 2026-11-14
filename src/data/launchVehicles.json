@@ -1,0 +1,41 @@
+[
+  {
+    "id": "small-launcher",
+    "name": "Small Lift Launcher",
+    "description": "A rideshare-class launch option for compact payloads.",
+    "shortDescription": "Lower capacity, lower cost",
+    "tooltip": "Payload capacities are approximations for this game, keyed by orbit id.",
+    "costM": 42,
+    "payloadCapacityKgByOrbitId": {
+      "leo": 650,
+      "sso": 480,
+      "lunar": 90
+    }
+  },
+  {
+    "id": "medium-launcher",
+    "name": "Medium Lift Launcher",
+    "description": "A medium-class launch option for larger spacecraft.",
+    "shortDescription": "Balanced capacity",
+    "tooltip": "Payload capacities vary by destination orbit.",
+    "costM": 88,
+    "payloadCapacityKgByOrbitId": {
+      "leo": 4200,
+      "sso": 3100,
+      "lunar": 1250
+    }
+  },
+  {
+    "id": "heavy-launcher",
+    "name": "Heavy Lift Launcher",
+    "description": "A high-capacity launch option for demanding payloads and destinations.",
+    "shortDescription": "High capacity, high cost",
+    "tooltip": "This fictional vehicle is a game placeholder, not a launch-service quote.",
+    "costM": 145,
+    "payloadCapacityKgByOrbitId": {
+      "leo": 18000,
+      "sso": 12500,
+      "lunar": 6800
+    }
+  }
+]

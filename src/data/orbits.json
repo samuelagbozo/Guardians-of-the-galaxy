@@ -1,0 +1,26 @@
+[
+  {
+    "id": "leo",
+    "name": "Low Earth Orbit",
+    "description": "A near-Earth orbit suited to short-duration observation and technology demonstrations.",
+    "shortDescription": "Close to Earth, low energy",
+    "tooltip": "Low Earth Orbit (LEO): approximately 160-2,000 km altitude.",
+    "deltaVNeedMps": 120
+  },
+  {
+    "id": "sso",
+    "name": "Sun-Synchronous Orbit",
+    "description": "A near-polar orbit that provides repeatable local solar time for Earth observation.",
+    "shortDescription": "Consistent lighting",
+    "tooltip": "A sun-synchronous orbit revisits locations under similar lighting conditions.",
+    "deltaVNeedMps": 180
+  },
+  {
+    "id": "lunar",
+    "name": "Lunar Transfer",
+    "description": "A transfer trajectory from Earth orbit toward the Moon, requiring additional spacecraft propulsion.",
+    "shortDescription": "High energy, lunar reach",
+    "tooltip": "Lunar transfer requires substantially more spacecraft delta-v than Earth orbit.",
+    "deltaVNeedMps": 3100
+  }
+]

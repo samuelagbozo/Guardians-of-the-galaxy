@@ -1,0 +1,45 @@
+[
+  {
+    "id": "multispectral-camera",
+    "name": "Multispectral Camera",
+    "description": "An imaging instrument that samples several visible and near-infrared bands.",
+    "shortDescription": "Surface color and vegetation",
+    "tooltip": "Useful for mapping land cover and broad environmental change.",
+    "learnMoreCardId": "remote-sensing-basics",
+    "attributes": {
+      "massKg": 42,
+      "powerUseW": 95,
+      "dataGeneratedMbps": 18,
+      "costM": 24,
+      "sciencePoints": 32
+    }
+  },
+  {
+    "id": "thermal-radiometer",
+    "name": "Thermal Radiometer",
+    "description": "Measures emitted infrared energy to estimate surface temperature.",
+    "shortDescription": "Surface temperature",
+    "tooltip": "Thermal measurements can reveal fires, heat islands, and water stress.",
+    "attributes": {
+      "massKg": 58,
+      "powerUseW": 130,
+      "dataGeneratedMbps": 12,
+      "costM": 31,
+      "sciencePoints": 38
+    }
+  },
+  {
+    "id": "magnetometer",
+    "name": "Fluxgate Magnetometer",
+    "description": "Measures local magnetic-field strength and direction.",
+    "shortDescription": "Magnetic environment",
+    "tooltip": "A boom-mounted magnetometer helps characterize planetary and space-weather fields.",
+    "attributes": {
+      "massKg": 16,
+      "powerUseW": 24,
+      "dataGeneratedMbps": 0.4,
+      "costM": 12,
+      "sciencePoints": 27
+    }
+  }
+]

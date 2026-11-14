@@ -1,0 +1,9 @@
+{
+  "defaultSeed": 173205,
+  "marginWarningThreshold": 0.15,
+  "gravityMps2": 9.80665,
+  "fuelModel": {
+    "name": "rocket-equation-v1",
+    "description": "Fuel mass estimated from dry mass, delta-v need, and bus specific impulse."
+  }
+}
