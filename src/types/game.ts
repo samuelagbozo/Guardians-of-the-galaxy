@@ -54,10 +54,33 @@ export interface GameConfig {
   defaultSeed: number;
   marginWarningThreshold: number;
   gravityMps2: number;
+  checks: CheckDefinition[];
   fuelModel: {
     name: string;
     description: string;
   };
+}
+
+export type CheckMetric =
+  | 'requiredSelectionCount'
+  | 'selectedSelectionCount'
+  | 'totalMassKg'
+  | 'launchCapacityKg'
+  | 'costM'
+  | 'budgetM'
+  | 'powerUseW'
+  | 'powerGenW'
+  | 'dataGeneratedMb'
+  | 'dataDownlinkMb';
+
+export interface CheckDefinition {
+  id: string;
+  kind: 'blocker' | 'warning';
+  label: string;
+  requiredMetric: CheckMetric;
+  availableMetric: CheckMetric;
+  unit: string;
+  warnOnThinMargin?: boolean;
 }
 
 export interface GameData {

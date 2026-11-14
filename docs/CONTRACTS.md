@@ -16,7 +16,9 @@ values without requiring a new engine case.
 `Objective` supplies a `budgetM` and `missionDurationDays`; `Orbit` supplies
 `deltaVNeedMps`; each `LaunchVehicle` maps orbit ids to payload capacity; each
 `SpacecraftBus` supplies `propulsionIspSec`. `GameConfig` carries the default seed,
-margin threshold, gravity constant, and fuel-model description.
+margin threshold, gravity constant, check registry, and fuel-model description. Its
+`checks` rows compare named metrics and define blocker/warning severity; adding another
+comparison between supported metrics is data-only.
 
 `MissionSelections` is the selected objective/orbit, one id for each spacecraft
 component, and a list of instrument ids. `GameDataInput` is the raw set of tables accepted
@@ -65,10 +67,19 @@ const data = loadGameData({
 
 ## Engine
 
-`evaluateMission(selections, data)` is a pure function. Step 0 returns fixed mock totals
-and data-dependent placeholder checks so consumers can integrate immediately. Step 1
-replaces these values with documented mass, fuel, cost, power, data, and science
-calculations. No UI imports belong in `src/engine`.
+`evaluateMission(selections, data)` is a pure function with no UI imports.
+
+- Dry mass is the sum of bus, instrument, power-system, and antenna `massKg` attributes.
+- Fuel is estimated by `dryMassKg * (exp(deltaVNeedMps / (propulsionIspSec * gravityMps2)) - 1)`.
+  This simplified rocket-equation estimate is marked `TODO(balance)` for tuning.
+- Total mass is dry mass plus fuel; cost sums selected component attributes plus
+  launch-vehicle cost, while science points sum selected instrument attributes.
+- Power generation comes from the selected power system and use sums selected component
+  consumption, in watts. Generated data sums instrument rates; downlink uses the antenna
+  rate. Each data volume in MB is its Mbps rate times mission seconds divided by 8.
+- Registry checks calculate `margin = (available - required) / available`. A passing
+  check below the configured margin threshold gets a separate warning; launch-fit,
+  budget, and missing selections remain hard blockers.
 
 ```ts
 const evaluation = evaluateMission(selections, gameData);
@@ -116,3 +127,7 @@ const score = defaultRiskHooks.scoreMission(evaluation, outcome);
 
 - **Step 0 — initial contract:** Added shared game types, bundled placeholder JSON,
   validation/loader, engine and risk-hook stubs, Zustand store, and integration examples.
+- **Step 1 — BREAKING CHANGE:** `GameConfig` now requires a `checks: CheckDefinition[]`
+  registry. Teammates replacing `gameConfig.json` or constructing `GameConfig` in fixtures
+  must include the five required baseline checks; add-on checks may compare supported
+  metrics without an engine change.
