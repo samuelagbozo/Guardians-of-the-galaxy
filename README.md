@@ -131,13 +131,28 @@ npm run preview    # Serve the production bundle locally
 │   └── textures/               # Planet surface and normal-map textures
 └── src/
     ├── main.tsx                # React bootstrap and global CSS import
-    ├── App.tsx                 # Top-level state machine, UI, and orchestration
+    ├── App.tsx                 # Top-level workflow state and orchestration
     ├── Scene.tsx               # Shared Three.js primitives and mission-world scenes
     ├── engine.ts               # Pure mission evaluation and seeded launch simulation
     ├── data.ts                 # Typed objectives, orbits, and spacecraft component data
     ├── audio.ts                # Procedural Web Audio sound system
     ├── voice.ts                # Optional voiceover playback and caption timing
     ├── index.css               # Global layout, theme variables, and reduced-motion rules
+    ├── components/
+    │   ├── BaseHud.tsx         # Operations-base checklist and interaction prompts
+    │   ├── IntroOverlay.tsx    # Intro screen and mission start control
+    │   ├── IssHud.tsx          # ISS tour and docking controls/telemetry
+    │   ├── MissionPanel.tsx    # Mission workflow panel composition
+    │   ├── MissionUi.tsx       # Shared mission cards, headings, and resource bars
+    │   ├── RuntimeHud.tsx      # Loading, audio, caption, and launch overlays
+    │   ├── SceneCanvas.tsx     # 3D canvas, scene selection, and postprocessing
+    │   ├── types.ts            # Shared view and HUD presentation constants
+    │   └── mission/
+    │       ├── DesignPanel.tsx     # Spacecraft component selection
+    │       ├── LaunchPanel.tsx     # Launch readiness and countdown control
+    │       ├── ObjectivePanel.tsx  # Objective and orbit selection
+    │       ├── ReportPanel.tsx     # Mission outcome and score report
+    │       └── ReviewPanel.tsx     # Risk, resource margins, blockers, warnings
     ├── data/
     │   ├── learning_cards.json # Phase-based engineering lessons
     │   └── real_missions.json  # Paraphrased historical mission examples
@@ -155,8 +170,8 @@ npm run preview    # Serve the production bundle locally
 ### 1. Browser Bootstrap (`index.html`, `main.tsx`)
 `index.html` supplies the `#root` element and loads `/src/main.tsx`, which mounts `<App />` inside `React.StrictMode` and imports global styles from `index.css`.
 
-### 2. Application Coordinator (`App.tsx`)
-`App.tsx` owns the player-facing workflow via its `View` navigation state union:
+### 2. Application Coordinator (`App.tsx`, `components/`)
+`App.tsx` owns workflow state and coordinates components via the `View` navigation state union:
 
 ```text
 intro → dive → base
@@ -171,8 +186,9 @@ orbit → report                 (Earth-orbit missions via completed orbit state
 
 * Stores current `View` and `Sel` (player mission configuration).
 * Derives live review metrics via `evaluate(sel)` and triggers launches via `runLaunch(sel, review, seed)`.
-* Coordinates scene rendering, callbacks (`onProgress`, `onDone`), fade transitions, pointer-lock release, mute state, adaptive graphics quality, and educational cards.
-* Communicates with 3D scenes strictly through props and callbacks rather than a global state store.
+* Coordinates callbacks (`onProgress`, `onDone`), fade transitions, pointer-lock release, mute state, adaptive graphics quality, and educational cards.
+* `components/SceneCanvas.tsx` selects and configures 3D scenes; the HUD and mission UI are split into focused components under `components/` and `components/mission/`.
+* Communicates with UI and 3D scenes strictly through props and callbacks rather than a global state store.
 
 ### 3. Mission Domain Model (`data.ts`)
 `data.ts` is the single source of truth for playable engineering choices:
