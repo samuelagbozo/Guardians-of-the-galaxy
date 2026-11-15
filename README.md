@@ -1,61 +1,163 @@
-#Orbit Architect
-Orbit Architect is an interactive space-mission design and flight game. Players define a science objective, choose an orbit, assemble a spacecraft, pass a flight-readiness review, launch it, and inspect the outcome. The project is designed as a learning experience: the engineering values are simplified, but the relationships between mass, power, data, volume, cost, reliability, and mission risk are explicit and inspectable.
-The application is a client-side Vite project. There is no backend, database, authentication layer, or network API. Mission definitions and game content are bundled with the frontend, while 3D scenes, launch outcomes, sound effects, and docking interactions run in the browser.
-What the player does
-The main experience is a stateful mission loop:
-Intro and solar-system dive - the player starts the experience and transitions into the mission base.
-Base exploration - the player walks around the 3D operations base and visits interactive hubs.
-Mission definition - the player chooses a science objective and a compatible orbit.
-Spacecraft design - the player selects instruments, power, communications, a spacecraft bus, and a launcher.
-Flight-readiness review - the engine calculates resource margins, blockers, warnings, and risk level.
-Launch - a timed shuttle-style launch animation visualizes separation, insertion, and deployment.
-Mission execution - the craft either operates in Earth orbit, cruises to the Moon or Mars, or arrives at the selected destination.
-Mission report - the player receives an outcome, score, verdict, deterministic cause chain, and related real-mission examples.
-ISS tour or docking - after a completed mission, the player can tour the ISS or attempt manual docking with a spacecraft.
-Technology stack
-React 18 for the application shell and UI state.
-TypeScript for type-safe content, selection state, engine results, and scene props.
-Vite 5 for local development and production bundling.
-React Three Fiber for rendering Three.js scenes as React components.
-Three.js for meshes, materials, cameras, animation, GLTF models, textures, and spatial calculations.
-`@react-three/drei` for controls, loaders, environment lighting, stars, HTML labels, and pointer-lock movement.
-`@react-three/postprocessing` and `postprocessing` for bloom and tone mapping.
-Tailwind CSS 4 for utility classes used by the interface.
-Web Audio API for procedural sound effects. Voiceover is optional audio-file content.
-Repository layout
+# Orbit Architect
+
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)
+![Three.js](https://img.shields.io/badge/Three.js-React_Three_Fiber-000000?logo=threedotjs&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
+
+**Orbit Architect** is an interactive space-mission design and flight game. Players define a science objective, choose an orbit, assemble a spacecraft, pass a flight-readiness review, launch it, and inspect the outcome. 
+
+Designed as an interactive learning experience, the engineering values are simplified while keeping the relationships between **mass, power, data, volume, cost, reliability, and mission risk** explicit and inspectable.
+
+The application is a 100% client-side Vite project—there is no backend, database, authentication layer, or network API. All mission definitions, 3D scenes, launch outcomes, procedural sound effects, and docking interactions run directly in the browser.
+
+---
+
+## 📑 Table of Contents
+
+- [Gameplay Loop](#-gameplay-loop)
+- [Technology Stack](#-technology-stack)
+- [Getting Started](#-getting-started)
+- [Controls](#-controls)
+- [Repository Layout](#-repository-layout)
+- [Architecture & Interconnection](#-architecture--interconnection)
+- [Runtime Data Flow](#-runtime-data-flow)
+- [Extending the Project](#-extending-the-project)
+- [Design & Maintenance Guidelines](#-design--maintenance-guidelines)
+- [Known Implementation Notes](#-known-implementation-notes)
+- [Troubleshooting](#-troubleshooting)
+
+---
+
+## 🎮 Gameplay Loop
+
+The main experience follows a stateful mission progression:
+
+1. **Intro & Solar-System Dive:** Start the experience and transition seamlessly into the 3D operations base.
+2. **Base Exploration:** Walk around the 3D operations base and visit interactive mission hubs.
+3. **Mission Definition:** Choose a science objective and a compatible target orbit.
+4. **Spacecraft Design:** Select scientific instruments, power systems, communications antennas, a spacecraft bus, and a launch vehicle.
+5. **Flight-Readiness Review:** The simulation engine calculates resource margins, hard blockers, warnings, and overall risk level.
+6. **Launch:** Watch a timed, shuttle-style launch animation visualizing stage separation, orbital insertion, and deployment.
+7. **Mission Execution:** Operate in Earth orbit, cruise through interplanetary space to the Moon or Mars, or arrive at your destination.
+8. **Mission Report:** Receive a final outcome, score breakdown, verdict, deterministic cause chain, and related real-world mission examples.
+9. **ISS Tour & Docking:** After completing a mission, tour the International Space Station or attempt a manual 6-DOF docking maneuver.
+
+---
+
+## 🛠 Technology Stack
+
+* **React 18:** Application shell, routing state machine, and UI overlays.
+* **TypeScript:** Type-safe mission content, player selection state, engine results, and 3D scene props.
+* **Vite 5:** Fast local development server and production bundling.
+* **React Three Fiber & Three.js:** Declarative 3D rendering, meshes, materials, cameras, animations, GLTF models, textures, and spatial math.
+* **@react-three/drei:** Camera controls, asset loaders, environment lighting, starfields, HTML labels, and pointer-lock movement.
+* **@react-three/postprocessing & postprocessing:** Bloom and tone mapping effects.
+* **Tailwind CSS 4:** Utility-first styling for the HUD and mission panels.
+* **Web Audio API:** Procedural sound synthesis (with optional MP3 voiceover support).
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+* **Node.js** with `npm` (current LTS release recommended).
+* A modern web browser with **WebGL** support.
+* *Note: Browsers require a user gesture to unlock audio; clicking the in-game start button initializes the Web Audio context.*
+
+### Quick Launch (Convenience Scripts)
+Both launcher scripts check for Node.js, automatically install dependencies on the first run (`npm install --legacy-peer-deps`), and start the Vite server:
+
+* **Windows:** Double-click `START_GAME.bat`
+* **macOS / Linux:**
+  ```sh
+  ./start-game.sh
+  ```
+
+### Manual Setup
+```sh
+npm install --legacy-peer-deps
+npm run dev
+```
+Open the local URL printed in your terminal (typically `http://localhost:5173`).
+
+### Development Commands
+```sh
+npm run dev        # Start the Vite development server
+npm run build      # Create a type-check-independent production bundle
+npm run typecheck  # Run TypeScript compiler checks without emitting files
+npm run preview    # Serve the production bundle locally
+```
+> **Note:** There is currently no automated test runner in `package.json`. When modifying mission rules, run `npm run typecheck` and `npm run build`. When modifying 3D scenes, verify the affected views manually in a WebGL-capable browser.
+
+---
+
+## 🕹 Controls
+
+### Base & General Navigation
+| Key / Action | Function |
+| :--- | :--- |
+| **Click Scene** | Capture mouse (pointer lock) |
+| `W` `A` `S` `D` | Move around the operations base |
+| `Shift` | Sprint / move faster |
+| `E` | Interact with a nearby mission hub |
+| `Esc` | Release pointer lock |
+| `M` | Toggle audio mute |
+
+### ISS Manual Docking Mode
+| Key | Function |
+| :--- | :--- |
+| `W` / `S` | Forward / Reverse thrust |
+| `A` / `D` | Lateral (left / right) thrust |
+| `Space` / `C` | Vertical (up / down) thrust |
+| `X` | Kill velocity / Braking |
+
+*The docking controller actively tracks range, relative speed, safe speed limits, remaining fuel, and status (`approach`, `docked`, `crash`, or `dry`).*
+
+---
+
+## 📂 Repository Layout
+
 ```text
 .
-├── index.html                 Browser entry document
-├── package.json               Scripts and runtime/development dependencies
-├── start-game.sh              macOS/Linux convenience launcher
-├── START_GAME.bat             Windows convenience launcher
+├── index.html                  # Browser entry document
+├── package.json                # Scripts and runtime/development dependencies
+├── start-game.sh               # macOS/Linux convenience launcher
+├── START_GAME.bat              # Windows convenience launcher
 ├── public/
-│   ├── audio/vo/              Optional recorded voiceover files
-│   ├── models/                GLB spacecraft, launch-pad, and ISS assets
-│   └── textures/              Planet and normal-map textures
+│   ├── audio/vo/               # Optional recorded voiceover MP3 files
+│   ├── models/                 # GLB spacecraft, launch-pad, and ISS assets
+│   └── textures/               # Planet surface and normal-map textures
 └── src/
-    ├── main.tsx               React bootstrap and global CSS import
-    ├── App.tsx                Top-level state machine, UI, and orchestration
-    ├── Scene.tsx              Shared Three.js primitives and mission-world scenes
-    ├── engine.ts              Pure mission evaluation and seeded launch simulation
-    ├── data.ts                Typed objectives, orbits, and spacecraft component data
-    ├── audio.ts               Procedural Web Audio sound system
-    ├── voice.ts               Optional voiceover playback and caption timing
-    ├── index.css              Global layout, theme variables, and reduced-motion rules
+    ├── main.tsx                # React bootstrap and global CSS import
+    ├── App.tsx                 # Top-level state machine, UI, and orchestration
+    ├── Scene.tsx               # Shared Three.js primitives and mission-world scenes
+    ├── engine.ts               # Pure mission evaluation and seeded launch simulation
+    ├── data.ts                 # Typed objectives, orbits, and spacecraft component data
+    ├── audio.ts                # Procedural Web Audio sound system
+    ├── voice.ts                # Optional voiceover playback and caption timing
+    ├── index.css               # Global layout, theme variables, and reduced-motion rules
     ├── data/
-    │   ├── learning_cards.json
-    │   └── real_missions.json
+    │   ├── learning_cards.json # Phase-based engineering lessons
+    │   └── real_missions.json  # Paraphrased historical mission examples
     └── scenes/
-        ├── Base.tsx           Walkable base, hubs, movement, and launch pad
-        ├── Solar.tsx          Solar-system overview and transfer trajectories
-        └── Iss.tsx            ISS tour and manual docking simulation
+        ├── Base.tsx            # Walkable base, hubs, movement, and launch pad
+        ├── Solar.tsx           # Solar-system overview and transfer trajectories
+        └── Iss.tsx             # ISS tour and manual docking simulation
 ```
-`node_modules/` is generated dependency output and is not part of the application source. The `public/` directory is served at the web root, so a file such as `public/textures/earth.jpg` is referenced in code as `/textures/earth.jpg`.
-Architecture and interconnection
-1. Browser bootstrap
-`index.html` supplies the `root` element and loads `/src/main.tsx`. `main.tsx` creates the React root, wraps `App` in `React.StrictMode`, and imports `index.css`.
-2. `App` is the application coordinator
-`App.tsx` owns the player-facing workflow. Its `View` union is the navigation state for the whole game:
+*(Note: `public/` is served at the web root, so `public/textures/earth.jpg` is referenced in code as `/textures/earth.jpg`.)*
+
+---
+
+## 🏗 Architecture & Interconnection
+
+### 1. Browser Bootstrap (`index.html`, `main.tsx`)
+`index.html` supplies the `#root` element and loads `/src/main.tsx`, which mounts `<App />` inside `React.StrictMode` and imports global styles from `index.css`.
+
+### 2. Application Coordinator (`App.tsx`)
+`App.tsx` owns the player-facing workflow via its `View` navigation state union:
+
 ```text
 intro → dive → base
               ├── define → design → review → launch → pad
@@ -63,186 +165,112 @@ intro → dive → base
               ├── iss
               └── base
 
-orbit → cruise → arrive       (Moon/Mars missions)
-orbit → report                (Earth-orbit missions, represented by completed orbit state)
+orbit → cruise → arrive        (Moon / Mars missions)
+orbit → report                 (Earth-orbit missions via completed orbit state)
 ```
-The component:
-stores the current `View`;
-stores the `Sel` mission configuration;
-derives the current review with `evaluate(sel)`;
-starts a launch with `runLaunch(sel, review, seed)`;
-chooses which Three.js scene to render;
-connects scene callbacks to UI progress and completion state;
-controls fade transitions, pointer-lock release, visited hubs, mute state, and adaptive quality;
-selects learning cards and real-mission examples for the current phase.
-The UI and 3D scenes communicate through props and callbacks rather than a global state library. For example, `Base` reports the nearby hub, `App` changes the view after the player presses `E`, and `World`/`Solar` report animation progress through `onProgress` and completion through `onDone`.
-3. Data is the mission domain model
-`data.ts` is the authoritative source for the playable engineering choices. It defines:
-`OBJECTIVES`: science goals, budgets, compatible orbit IDs, and learning text;
-`ORBITS`: altitude, destination, mission factor, and descriptions;
-`INSTRUMENTS`: science value and resource requirements;
-`POWER`: generated power and hardware cost;
-`ANTENNAS`: downlink capacity and power/mass requirements;
-`BUSES`: spacecraft capacity, model references, and resource requirements;
-`LAUNCHERS`: lift capacity, fairing volume, price, and reliability.
-Each component uses the shared `Part` shape. The engine therefore aggregates components generically instead of branching on individual component IDs. To add a new instrument or hardware option, add a correctly shaped row and, when needed, add its objective ID. The UI lists the rows from these arrays automatically.
-4. The engine is pure business logic
-`engine.ts` deliberately has no DOM, React, Three.js, or browser APIs. It imports the typed domain data and exposes:
-`evaluate(sel)`: resolves selected IDs, sums resource requirements, calculates orbit-adjusted launch capacity, and returns a `Review`;
-`runLaunch(sel, review, seed)`: runs seeded risk events and returns a `LaunchResult`;
-`usd(x)`: formats costs for the UI.
-The review calculates margins for:
-mass versus launch capacity;
-spacecraft volume versus fairing capacity;
-power demand versus generated power;
-instrument data production versus antenna downlink capacity;
-total cost versus objective budget.
-Hard constraints become blockers, so `canLaunch` is false. Power/data shortfalls and thin margins become warnings. The worst of the mass, power, and data ratios determines the green/yellow/red risk level.
-Launch outcomes are reproducible for the same selection, review, and seed. The seed currently comes from `Date.now().toString(36)` when the player starts a launch. The result includes the individual rolls, outcome, score categories, verdict, and cause chain so the UI can explain why a mission succeeded or failed.
-5. Three.js scene layer
-`Scene.tsx` contains reusable rendering and spacecraft functions:
-texture loading and color-space setup;
-Earth, Moon, and Mars bodies with atmospheres;
-lighting/environment helpers;
-GLTF spacecraft loading and normalization;
-procedural spacecraft construction from the selected `Sel`;
-Earth orbit visualization;
-launch and arrival animation components;
-the exported `World` scene used by `App`.
-The scene components consume `Sel`, but they do not decide whether a design is valid. That decision remains in `engine.ts`. This keeps visual presentation separate from mission rules.
-The specialized scenes are:
-`Base.tsx`: walkable operations base, hub proximity detection, pointer-lock movement, and the launch-pad countdown animation;
-`Solar.tsx`: planet layout, orbital motion, Hohmann-like transfer visualization, and Moon cruise animation;
-`Iss.tsx`: ISS model tour labels plus a physics-lite manual docking mode with thrust, fuel, collision boxes, and docking status.
-6. Audio and voiceover
-`audio.ts` creates a single Web Audio context after the user starts the experience. It synthesizes wind, space ambience, launch rumble, hiss, burn, beeps, radio bursts, and impact-like sounds. `App` changes layers as the current `View`, launch timeline, and caption change.
-`voice.ts` maps event IDs to captions and durations. It attempts to load `/audio/vo/<id>.mp3`; if the file is absent, the caption still appears for the configured duration. Voice playback ducks procedural sound and prevents overlapping lines.
-7. Learning and mission reference data
-`learning_cards.json` supplies short engineering lessons shown by phase.
-`real_missions.json` supplies paraphrased mission examples. `App` filters them with objective-specific regular expressions and displays a small set in the final report.
-The JSON files are imported at build time. They are content inputs, not runtime API responses. Keep their schema stable when adding rows, and verify that IDs used for matching correspond to the current `data.ts` model.
-Runtime data flow
-```text
-User input
-   │
-   ▼
-App state: View + Sel
-   │
-   ├── evaluate(Sel)
-   │       └── Review: margins, blockers, warnings, risk, canLaunch
-   │
-   ├── UI panels
-   │       └── objective/design/review/launch controls
-   │
-   └── 3D scene props
-           ├── Base → nearby hub / launch timeline
-           ├── World → launch, orbit, arrival progress
-           ├── Solar → cruise progress
-           └── Iss → docking telemetry
 
-When launch starts:
-Sel + Review + seed
+* Stores current `View` and `Sel` (player mission configuration).
+* Derives live review metrics via `evaluate(sel)` and triggers launches via `runLaunch(sel, review, seed)`.
+* Coordinates scene rendering, callbacks (`onProgress`, `onDone`), fade transitions, pointer-lock release, mute state, adaptive graphics quality, and educational cards.
+* Communicates with 3D scenes strictly through props and callbacks rather than a global state store.
+
+### 3. Mission Domain Model (`data.ts`)
+`data.ts` is the single source of truth for playable engineering choices:
+* `OBJECTIVES`: Science goals, budgets, compatible orbit IDs, and learning text.
+* `ORBITS`: Altitude, destination (`earth`, `moon`, `mars`), mission factor, and descriptions.
+* `INSTRUMENTS`, `POWER`, `ANTENNAS`, `BUSES`, `LAUNCHERS`: Hardware catalogs sharing the unified `Part` interface so the engine aggregates resources generically without ID-specific branching.
+
+### 4. Pure Business Logic (`engine.ts`)
+`engine.ts` has zero dependencies on React, Three.js, or browser APIs. It exposes:
+* `evaluate(sel)`: Sums resource requirements, calculates orbit-adjusted lift capacity, and returns a `Review` covering **mass, fairing volume, power, downlink data, and budget**. Hard constraint violations become blockers (`canLaunch = false`), while thin margins or shortfalls trigger warnings and set the green/yellow/red risk level.
+* `runLaunch(sel, review, seed)`: Executes seeded risk rolls (using `Date.now().toString(36)` at launch) to produce a deterministic `LaunchResult` containing individual roll outcomes, score categories, final verdict, and a human-readable cause chain.
+* `usd(x)`: Currency formatter for UI budgets.
+
+### 5. Three.js Scene Layer (`Scene.tsx` & `src/scenes/`)
+* `Scene.tsx`: Manages texture loading, color spaces, Earth/Moon/Mars meshes and atmospheres, GLTF normalization, procedural spacecraft assembly from `Sel`, and the `World` scene. Visuals consume `Sel` and `LaunchResult` flags (`fail`, `fault`) without duplicating validation logic.
+* `Base.tsx`: Walkable operations center, hub proximity triggers, pointer-lock controls, and launch-pad countdown sequence.
+* `Solar.tsx`: Planetary layout, orbital motion, Hohmann-like transfer arcs, and interplanetary cruise animations.
+* `Iss.tsx`: ISS guided tour labels and physics-lite 6-DOF manual docking mode.
+
+### 6. Audio, Voiceover & Reference Content (`audio.ts`, `voice.ts`, `src/data/`)
+* `audio.ts` synthesizes wind, space ambience, launch rumble, stage separation hiss, engine burns, telemetry beeps, and radio bursts via the Web Audio API.
+* `voice.ts` plays `/audio/vo/<id>.mp3` when available, automatically ducking procedural audio and displaying timed captions even if audio files are omitted.
+* `learning_cards.json` and `real_missions.json` provide build-time educational content matched to the active mission phase and objective.
+
+---
+
+## 🔄 Runtime Data Flow
+
+```text
+User Input
    │
    ▼
-runLaunch(...)
+App State (View + Sel)
    │
-   └── LaunchResult → animation flags + final report + score
+   ├──► evaluate(Sel) ──► Review (margins, blockers, warnings, risk, canLaunch)
+   │
+   ├──► UI Panels ──────► Objective, design, review, and launch controls
+   │
+   └──► 3D Scene Props
+           ├── Base  ──► Nearby hub detection / launch timeline
+           ├── World ──► Launch, orbit, and arrival progress
+           ├── Solar ──► Interplanetary cruise progress
+           └── Iss   ──► Manual docking telemetry
+
+On Launch Trigger:
+Sel + Review + Seed ──► runLaunch(...) ──► LaunchResult ──► 3D Animation Flags + Final Report
 ```
-The important boundary is that the engine result is computed before the visual launch begins. The launch scene reads flags derived from the result (`fail`, `fault`, and deep-transfer behavior), while the report reads the complete `LaunchResult`.
-Getting started
-Requirements
-Node.js with npm. Use a current LTS release.
-A modern browser with WebGL support.
-Audio playback may require a user gesture; the start button initializes the audio context.
-Convenience launchers
-Windows:
-```text
-Double-click START_GAME.bat
-```
-macOS/Linux:
-```sh
-./start-game.sh
-```
-Both scripts check for Node.js, install dependencies on first run with `npm install --legacy-peer-deps`, and start Vite.
-Manual setup
-```sh
-npm install --legacy-peer-deps
-npm run dev
-```
-Open the URL printed by Vite, normally `http://localhost:5173`.
-Development commands
-```sh
-npm run dev       # Start the Vite development server
-npm run build     # Type-check-independent production bundle
-npm run typecheck # Run TypeScript without emitting files
-npm run preview   # Serve the production bundle locally
-```
-There is currently no automated test script in `package.json`. For changes to mission rules, run `npm run typecheck` and `npm run build`; for scene changes, also exercise the affected view manually in a WebGL-capable browser.
-Controls
-Base and general navigation
-Click the scene to capture the mouse.
-`W`, `A`, `S`, `D` move through the base.
-`Shift` moves faster.
-`E` interacts with a nearby hub.
-`Esc` releases pointer lock.
-`M` toggles mute.
-ISS docking
-In docking mode, use:
-`W` / `S`: forward and reverse thrust;
-`A` / `D`: lateral thrust;
-`Space` / `C`: vertical thrust;
-`X`: braking.
-The docking controller reports range, relative speed, speed limit, fuel, and status (`approach`, `docked`, `crash`, or `dry`).
-Extending the project
-Add a mission component
-Add a row to the appropriate array in `data.ts`.
-Use a unique `id`.
-Set all shared resource fields in the `Part` shape.
-Add `objectives` for instruments so they appear for the intended objectives.
-Add a `model` URL only when the component should use a GLB spacecraft model.
-Run `npm run typecheck` and verify the design and review screens.
-No engine changes should be required for ordinary data additions.
-Add an objective or orbit
-Add the row to `OBJECTIVES` or `ORBITS`, then ensure:
-every referenced orbit ID exists;
-the destination is one of `earth`, `moon`, or `mars`;
-the objective has a realistic budget for the simplified component catalog;
-the objective has matching learning and real-mission content if the report should be populated.
-`App` derives the available orbit and instrument choices from these relationships.
-Add a new view or scene
-Extend the `View` union and `CARD_AT` in `App.tsx`.
-Add the view transition and rendering branch.
-Keep simulation state in `App` if it affects the overall mission flow.
-Put reusable Three.js behavior in `Scene.tsx` or a specialized file under `src/scenes/`.
-Expose progress and completion through callbacks rather than directly mutating UI state from a scene.
-Add audio/voice cues only when they correspond to real state transitions.
-Add assets
-Place GLB files in `public/models/`, textures in `public/textures/`, and optional voice files in `public/audio/vo/`. Reference them with root-relative URLs such as `/models/new-craft.glb`. Preload frequently used GLTF assets with `useGLTF.preload(...)` when load latency affects a transition.
-Design and maintenance guidelines
-Keep mission rules in `engine.ts`, not in JSX or scene animation code.
-Prefer adding data rows over adding ID-specific conditionals.
-Preserve the `Sel`, `Review`, and `LaunchResult` contracts when changing the mission flow.
-Keep browser-only behavior such as audio, pointer lock, camera movement, and timers in React/scene modules, not in the pure engine.
-When changing resource units, update the comments and every consumer together. Current units are kilograms, watts, Mbps, cubic metres, and US dollars.
-Use `prefers-reduced-motion` behavior already defined in `index.css` as the baseline for UI motion changes.
-Keep educational copy clearly labeled as simplified learning content; the application is not an authoritative mission-planning tool.
-Known implementation notes
-Launch risk is intentionally game-like and seeded rather than a physical trajectory or reliability model.
-Orbit and transfer visuals are illustrative. They are not intended to provide precise orbital mechanics.
-Audio and voiceover are optional enhancements; missing voice files should not block gameplay.
-The project uses `React.StrictMode`, so development builds may initialize and clean up effects more than once. Scene and audio effects should remain safe to initialize and dispose.
-Asset paths are case-sensitive when deployed to Linux-hosted environments.
-Troubleshooting
-The game does not start
-Confirm Node.js is installed and run:
-```sh
-npm install --legacy-peer-deps
-npm run dev
-```
-If the browser does not open automatically, navigate to the URL printed in the terminal.
-A model or texture is missing
-Check that the file exists under `public/` and that the code uses the exact root-relative path and casing. Browser developer tools will usually show a 404 for the missing asset.
-No sound is heard
-Start the game through the intro interaction first. Browsers commonly block Web Audio until a user gesture. Also check the in-game mute state with `M`.
-The game is slow
-The app renders high-resolution planets, GLTF models, postprocessing, and many stars. Test with the adaptive quality behavior in the UI, close other WebGL tabs, and profile scene changes before reducing asset quality globally.
+
+---
+
+## 🧩 Extending the Project
+
+### Adding a Spacecraft Component
+1. Add a new entry to the appropriate array (`INSTRUMENTS`, `POWER`, `ANTENNAS`, `BUSES`, or `LAUNCHERS`) in `src/data.ts` with a unique `id` and complete `Part` resource properties.
+2. For instruments, include matching objective IDs in the `objectives` array.
+3. Optionally include a `model` path pointing to a `.glb` file in `public/models/`.
+4. Run `npm run typecheck` and inspect the Design and Review screens.
+
+### Adding an Objective or Orbit
+1. Add the row to `OBJECTIVES` or `ORBITS` in `src/data.ts`.
+2. Ensure all referenced orbit IDs exist, `destination` is `'earth' | 'moon' | 'mars'`, and the budget is balanced against the component catalog.
+3. Add corresponding entries in `src/data/learning_cards.json` and `src/data/real_missions.json`.
+
+### Adding a New View or 3D Scene
+1. Extend the `View` union and `CARD_AT` mapping in `src/App.tsx`.
+2. Create reusable Three.js primitives in `src/Scene.tsx` or a dedicated module in `src/scenes/`.
+3. Report progress and completion back to `App.tsx` via callbacks (`onProgress`, `onDone`) rather than mutating global state.
+
+### Adding 3D Models, Textures, or Audio
+* Place assets in `public/models/`, `public/textures/`, or `public/audio/vo/`.
+* Reference them using root-relative paths (e.g., `/models/new-craft.glb`).
+* Use `useGLTF.preload(...)` for heavy models to prevent frame hitches during view transitions.
+
+---
+
+## 📐 Design & Maintenance Guidelines
+
+* **Separation of Concerns:** Keep all mission math and validation rules inside `engine.ts`. Keep browser APIs (Web Audio, pointer lock, timers) inside React/scene modules.
+* **Data-Driven Design:** Prefer adding data rows in `data.ts` over writing ID-specific `if/else` conditionals.
+* **Contract Stability:** Preserve the `Sel`, `Review`, and `LaunchResult` TypeScript interfaces when updating mission flow.
+* **Consistent Units:** Resource units across the codebase are **kilograms (`kg`)**, **watts (`W`)**, **megabits per second (`Mbps`)**, **cubic meters ($\text{m}^3$)**, and **US dollars (`USD`)**. Update comments and consumers together if changing units.
+* **Accessibility:** Respect the `prefers-reduced-motion` rules established in `src/index.css` when adding UI animations.
+* **Educational Framing:** Keep copy clearly framed as a simplified educational model rather than an authoritative aerospace engineering tool.
+
+---
+
+## 📝 Known Implementation Notes
+
+* Launch risk rolls and orbital trajectories are illustrative and game-like rather than high-fidelity astrodynamics simulations.
+* Missing voiceover MP3 files fail gracefully and fall back to timed on-screen captions without interrupting gameplay.
+* `React.StrictMode` is enabled in development, meaning effects initialize and clean up twice; ensure Three.js geometries, materials, and audio nodes dispose cleanly.
+* Asset paths are **case-sensitive** when deployed to Linux-based web hosts.
+
+---
+
+## 🔧 Troubleshooting
+
+* **The game does not start:** Verify Node.js is installed, run `npm install --legacy-peer-deps` followed by `npm run dev`, and manually open the localhost URL printed in your terminal.
+* **A 3D model or texture is missing:** Check the browser DevTools Network tab for `404` errors and verify that the file exists under `public/` with exact matching casing.
+* **No sound is heard:** Ensure you clicked the intro start button to unlock the browser's Web Audio context, and check that audio isn't muted (`M` key).
+* **Low frame rate / performance issues:** High-resolution planetary textures, starfields, and postprocessing bloom can be GPU-intensive. Use the in-game adaptive quality toggle and close other WebGL browser tabs.
