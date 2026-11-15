@@ -1,0 +1,192 @@
+{
+  "schema_version": "0.1",
+  "entity": "real_mission",
+  "match_rule": "Score each mission: +3 if it shares the chosen objective, +2 for each shared instrument, +1 if it shares the orbit, +1 if it shares the bus. Show the top match with its summary in the report. Missions with 'unlock' are hidden until that scenario exists.",
+  "status": "sourced",
+  "note": "Summaries are paraphrased from the project documents. The mapping to game rows is a design choice, not NASA data. Verify mission facts before publishing.",
+  "rows": [
+    {
+      "id": "m_halosat",
+      "name": "HaloSat",
+      "organization": "University of Iowa",
+      "summary": "A small X-ray satellite mapping hot gas in the Milky Way's halo.",
+      "objective_ids": [
+        "obj_cosmic_xray"
+      ],
+      "instrument_ids": [
+        "xray_spectrometer"
+      ],
+      "orbit_ids": [
+        "leo_400"
+      ],
+      "bus_ids": [
+        "bus_6u"
+      ],
+      "source": "CubeSat 101, section 6.9.2"
+    },
+    {
+      "id": "m_cxbn",
+      "name": "CXBN (Cosmic X-Ray Background NanoSat)",
+      "organization": "Morehead State University",
+      "summary": "A student CubeSat measuring the cosmic X-ray background more precisely.",
+      "objective_ids": [
+        "obj_cosmic_xray"
+      ],
+      "instrument_ids": [
+        "xray_spectrometer"
+      ],
+      "orbit_ids": [
+        "leo_400"
+      ],
+      "bus_ids": [
+        "bus_3u"
+      ],
+      "source": "CubeSat 101, chapter 5 photo caption"
+    },
+    {
+      "id": "m_minxss",
+      "name": "MinXSS",
+      "organization": "University of Colorado Boulder",
+      "summary": "A CubeSat studying solar flares and how the Sun affects Earth's upper atmosphere. Deployed from the ISS.",
+      "objective_ids": [
+        "obj_space_weather"
+      ],
+      "instrument_ids": [
+        "xray_spectrometer"
+      ],
+      "orbit_ids": [
+        "leo_400"
+      ],
+      "bus_ids": [
+        "bus_3u"
+      ],
+      "source": "CubeSat 101, chapter 2 and 5 captions"
+    },
+    {
+      "id": "m_cadre",
+      "name": "CADRE",
+      "organization": "University of Michigan",
+      "summary": "A space weather CubeSat studying the thermosphere and ionosphere. Deployed from the ISS.",
+      "objective_ids": [
+        "obj_space_weather"
+      ],
+      "instrument_ids": [
+        "particle_detector"
+      ],
+      "orbit_ids": [
+        "leo_400"
+      ],
+      "bus_ids": [
+        "bus_3u"
+      ],
+      "source": "CubeSat 101, chapter 2 caption"
+    },
+    {
+      "id": "m_andesite",
+      "name": "ANDESITE",
+      "organization": "Boston University",
+      "summary": "Measures small-scale magnetic features in the aurora using a constellation of tiny satellites that talk over a mesh network.",
+      "objective_ids": [
+        "obj_space_weather"
+      ],
+      "instrument_ids": [
+        "magnetometer"
+      ],
+      "orbit_ids": [
+        "leo_400",
+        "sso_600"
+      ],
+      "bus_ids": [
+        "bus_3u"
+      ],
+      "source": "CubeSat 101, section 2.4 caption"
+    },
+    {
+      "id": "m_bisonsat",
+      "name": "BisonSat",
+      "organization": "Salish Kootenai College",
+      "summary": "Took visible-light pictures of Earth with about 100 m or better detail. The first CubeSat designed, built, tested and operated by tribal college students.",
+      "objective_ids": [
+        "obj_earth_imaging"
+      ],
+      "instrument_ids": [
+        "vis_camera"
+      ],
+      "orbit_ids": [
+        "sso_600",
+        "leo_400"
+      ],
+      "bus_ids": [
+        "bus_3u"
+      ],
+      "source": "CubeSat 101, chapter 5 caption"
+    },
+    {
+      "id": "m_stmsat1",
+      "name": "STMSat-1",
+      "organization": "St. Thomas More Cathedral School",
+      "summary": "The first CubeSat NASA launched for a primary school. It photographed Earth and sent the images to schools.",
+      "objective_ids": [
+        "obj_earth_imaging"
+      ],
+      "instrument_ids": [
+        "vis_camera"
+      ],
+      "orbit_ids": [
+        "leo_400"
+      ],
+      "bus_ids": [
+        "bus_3u"
+      ],
+      "source": "CubeSat 101, section 2.5 caption"
+    },
+    {
+      "id": "m_icecube",
+      "name": "IceCube",
+      "organization": "NASA Goddard Space Flight Center",
+      "summary": "Tested a tiny cloud-ice sensor that could make measurements at heights where none exist today. Launched to the ISS in 2017.",
+      "objective_ids": [
+        "obj_earth_imaging"
+      ],
+      "instrument_ids": [
+        "submm_radiometer"
+      ],
+      "orbit_ids": [
+        "leo_400"
+      ],
+      "bus_ids": [
+        "bus_3u"
+      ],
+      "source": "CubeSat 101, chapter 3 caption"
+    },
+    {
+      "id": "m_punch",
+      "name": "PUNCH",
+      "organization": "NASA",
+      "summary": "Four small satellites in low Earth orbit make 3D observations of the Sun's corona to understand how it becomes the solar wind.",
+      "objective_ids": [
+        "obj_space_weather"
+      ],
+      "instrument_ids": [],
+      "orbit_ids": [
+        "sso_600"
+      ],
+      "bus_ids": [
+        "bus_6u"
+      ],
+      "source": "NASA Design and Develop Science Missions webinar, p. 24"
+    },
+    {
+      "id": "m_dawn",
+      "name": "Dawn",
+      "organization": "NASA",
+      "summary": "The first spacecraft to orbit two small bodies, the asteroid Vesta and dwarf planet Ceres, to study how planets formed.",
+      "objective_ids": [],
+      "instrument_ids": [],
+      "orbit_ids": [],
+      "bus_ids": [],
+      "unlock": "scenario_3",
+      "source": "NASA Design and Develop Science Missions webinar, p. 24"
+    }
+  ]
+}

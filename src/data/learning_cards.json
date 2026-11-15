@@ -1,0 +1,116 @@
+{
+  "schema_version": "0.1",
+  "entity": "learning_card",
+  "status": "placeholder",
+  "note": "All text paraphrased in plain language. Source field says where the idea comes from.",
+  "rows": [
+    {
+      "id": "lc_margin",
+      "title": "Margin: spare room on purpose",
+      "body": "Engineers never plan to use 100% of anything. Spare mass, power, data and money is called margin, and it exists because early numbers are always wrong. Real CubeSat teams keep at least 10% of their budget in reserve, and NASA concept reviews expect margins and reserves to be stated.",
+      "source": "CubeSat 101 sec 2.2; CML paper (point design)"
+    },
+    {
+      "id": "lc_mass_limit",
+      "title": "Why mass matters so much",
+      "body": "A rocket can lift only so much, and the launch provider calculates loads using your stated mass. If the finished spacecraft is heavier than promised, their numbers no longer hold and you can lose your slot. CubeSats come in standard sizes with strict mass limits, for example under 4 kg for a 3U.",
+      "source": "CubeSat 101 sec 6.4 and acceptance checklists"
+    },
+    {
+      "id": "lc_power_eclipse",
+      "title": "Power, sunlight and shadow",
+      "body": "Solar panels only work in sunlight. In low orbit your satellite spends a big part of each lap in Earth's shadow, so it needs a battery and extra panel area. A sun-synchronous orbit along the day-night line keeps the Sun on the panels almost all the time.",
+      "source": "General; orbit rows"
+    },
+    {
+      "id": "lc_battery_ul",
+      "title": "Why batteries get certified",
+      "body": "Batteries can catch fire if they fail, and the rocket carries other people's satellites too. A battery with a UL listing has passed standard safety testing. A home-built or modified one makes the launch provider ask for extra tests.",
+      "source": "CubeSat 101 sec 2.4, 6.5"
+    },
+    {
+      "id": "lc_data_downlink",
+      "title": "Collecting data is the easy part",
+      "body": "Getting the data home is the hard part. A radio can only send a limited amount during the short time the satellite passes over your ground station. If instruments collect more than you can send, the extra data is wasted. Cameras make the biggest files.",
+      "source": "General"
+    },
+    {
+      "id": "lc_ground_station",
+      "title": "The ground station is half the mission",
+      "body": "Without a working ground station you can't command the satellite or receive its data. Teams build and test theirs early and practice by tracking satellites that already fly. An untested ground station on launch day is a classic way for a mission to fail.",
+      "source": "CubeSat 101 sec 2.10"
+    },
+    {
+      "id": "lc_orbit_altitude",
+      "title": "How altitude changes the mission",
+      "body": "Low orbits are close for sharp pictures but still have a wisp of air that slowly pulls satellites down. Higher orbits last far longer and see more of Earth at once, but they pass through more radiation and cost more to reach. Satellites must also come down in a reasonable time so they don't become debris.",
+      "source": "General; CubeSat 101 sec 6.1"
+    },
+    {
+      "id": "lc_rideshare",
+      "title": "Cheap rides, fewer choices",
+      "body": "Sharing a rocket is far cheaper than buying one, but you fly where and when the main customer goes. NASA's CubeSat Launch Initiative covers the launch cost for selected missions, which makes flexibility valuable: the more flexible your orbit and date, the easier it is to find a ride.",
+      "source": "CubeSat 101 sec 2.2, 2.6 and chapter 3"
+    },
+    {
+      "id": "lc_licensing",
+      "title": "Radios and cameras need licenses",
+      "body": "Any satellite that transmits radio needs a license, and one that can image Earth may need a second license from a different agency. These take months. A mission can be removed from its launch if the paperwork isn't finished, so start early.",
+      "source": "CubeSat 101 chapter 5 and sec 2.8"
+    },
+    {
+      "id": "lc_burn_wire",
+      "title": "The tiny wire that holds panels shut",
+      "body": "Fold-out panels and antennas are held closed during launch, often by a thin line that is melted through by a small heater in orbit. Sometimes the line comes loose during the shake of launch. Using two separate wires makes accidental release less likely.",
+      "source": "CubeSat 101 sec 2.4"
+    },
+    {
+      "id": "lc_test_like_you_fly",
+      "title": "Test like you fly",
+      "body": "Almost every new spacecraft breaks something during vibration or vacuum testing. That is normal and good: it is far cheaper to find a problem on the ground. Planning tests early and keeping important parts easy to reach saves time and money.",
+      "source": "CubeSat 101 sec 2.4, 2.11"
+    },
+    {
+      "id": "lc_records_handover",
+      "title": "Write it down",
+      "body": "Student teams often lose knowledge when members graduate. Good records and photos made during build and test keep the project going and have saved real missions.",
+      "source": "CubeSat 101 sec 2.11"
+    },
+    {
+      "id": "lc_trade_space",
+      "title": "Explore before you commit",
+      "body": "NASA's concept maturity levels include a loop between feasibility, trade space and point design on purpose. Teams that skipped the trade-off stage ended up with less science and less efficient designs. Going back to change your design is part of the job, not a failure.",
+      "source": "CML paper (Wessen et al.), section II"
+    },
+    {
+      "id": "lc_cml_checklist",
+      "title": "A full checklist isn't a good design",
+      "body": "NASA's maturity checklist counts what has been done, not how well. A concept is considered at a level when about 80% of items are complete, but engineers still judge quality. Self-assessment tends to be too optimistic, so an independent reviewer helps.",
+      "source": "CML paper, section V"
+    },
+    {
+      "id": "lc_verification",
+      "title": "Plan how you'll check each requirement",
+      "body": "When you decide a requirement, decide how you will prove you met it. For example, a mass limit is checked by weighing the part. Missions like BioNutrients-2 list their targets (such as sample size and mass limits) and tie each one to a test.",
+      "source": "NASA Design and Develop Science Missions webinar"
+    },
+    {
+      "id": "lc_simple_wins",
+      "title": "Keep it simple",
+      "body": "Every extra system adds risk and often cost. Launch providers can be nervous about propulsion on small satellites, and parts that have flown before are trusted more than brand-new ones.",
+      "source": "CubeSat 101 sec 2.4"
+    },
+    {
+      "id": "lc_radiation",
+      "title": "Radiation in space",
+      "body": "Higher orbits pass through belts of fast charged particles that can scramble electronics. Missions in these orbits plan for computer resets and choose parts that tolerate radiation.",
+      "source": "General"
+    },
+    {
+      "id": "lc_segments",
+      "title": "Four segments of a mission",
+      "body": "A NASA science mission has four parts: the rocket (launch), the spacecraft and instruments (space), the stations and control team (ground), and the scientists who use the data (user). A good mission is designed starting from the users' needs.",
+      "source": "NASA Design and Develop Science Missions webinar"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+@import "tailwindcss";
+:root { --ink: #050b16; --steel: #9aa7b8; --line: rgba(154,167,184,.22); }
+html, body, #root { height: 100%; margin: 0; background: #02050c; overflow: hidden; font-family: "Inter", "Segoe UI", system-ui, sans-serif; }
+.panel { background: rgba(6,12,24,.88); backdrop-filter: blur(10px); border: 1px solid var(--line); border-radius: 2px; }
+.rule { border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
